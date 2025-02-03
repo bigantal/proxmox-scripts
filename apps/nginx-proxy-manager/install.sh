@@ -52,7 +52,7 @@ step_start "Dependencies" "Installing" "Installed"
   # Remove potential conflicting depenedencies
   pkg_del nginx nodejs npm yarn *certbot rust* cargo*
   # Install required depenedencies
-  pkg_add ca-certificates gnupg openssl apache2-utils logrotate $EPS_DEPENDENCIES
+  pkg_add wget ca-certificates gnupg openssl apache2-utils logrotate $EPS_DEPENDENCIES
 
 step_start "Rust" "Installing" "Installed"
   _rustArch=""
