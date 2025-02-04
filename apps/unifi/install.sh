@@ -49,14 +49,14 @@ step_start "UniFi Repository" "Adding" "Added"
   echo 'deb [signed-by=/usr/share/keyrings/ubiquiti-archive-keyring.gpg] https://www.ui.com/downloads/unifi/debian stable ubiquiti' | sudo tee /etc/apt/sources.list.d/100-ubnt-unifi.list > /dev/null
 
 step_start "MongoDB" "Installing" "Installed"
-  sudo apt update
-  sudo apt install -y mongodb-org-server
-  sudo systemctl enable mongod
-  sudo systemctl start mongod
+  pkg_update
+  pkg_add mongodb-org-server
+  svc_add mongod
+  svc_start mongod
 
 step_start "UniFi Network Controller" "Installing" "Installed"
-  sudo apt update
-  sudo apt install -y unifi
+  pkg_update
+  pkg_add unifi
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
@@ -65,4 +65,5 @@ step_start "Environment" "Cleaning" "Cleaned"
   pkg_clean
 
 step_end "Installation complete"
+
 printf "\nThe application should be reachable at ${CLR_CYB}https://$(os_ip):8443${CLR}\n\n"
