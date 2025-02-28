@@ -35,7 +35,13 @@ EPS_OS_VERSION=${EPS_OS_VERSION:-$(os_version)}
 
 step_start "Operating System" "Updating" "Updated"
   pkg_update
-#  pkg_upgrade
+  pkg_upgrade
+
+step_start "Transmission" "Installing" "Installed"
+  pkg_update
+  pkg_add transmission-daemon
+  svc_add transmission-daemon
+  svc_start transmission-daemon
 
 
 
