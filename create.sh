@@ -167,13 +167,24 @@ step_start "LXC container" "Creating" "Created"
     sleep 3
   fi
   
+  # pct create 120 "local:vztmpl/debian-bullseye-lxd-image.tar.xz" -arch arm64 -cmode shell -hostname test120 -cores 8 -memory 1024 -onboot 1 -ostype debian -rootfs local:4 -swap 512
+  # pct create 121 "local:vztmpl/debian-bullseye-lxd-image.tar.xz" -net0 name=eth0,bridge=vmbr0 -arch arm64 -cmode shell -hostname test121 -cores 8 -memory 1024 -onboot 1 -ostype debian -rootfs local:4 -swap 512
+  
+  _ipConfig=",ip=dhcp"
+  if [ "$EPS_OS_DISTRO" = "debian" ]; then
+    _ipConfig=""
+    log "warn" "In Debian we need to add the ip manually"
+    sleep 3
+  fi
+  
+  
   _pct_options=(
     -arch $(dpkg --print-architecture)
     -cmode shell
     -hostname $EPS_CT_HOSTNAME
     -cores $EPS_CT_CPU_CORES
     -memory $EPS_CT_MEMORY
-    -net0 name=eth0,bridge=$EPS_CT_NETWORK_BRIDGE,ip=dhcp
+    -net0 name=eth0,bridge=${EPS_CT_NETWORK_BRIDGE}${_ipConfig}
     -onboot 1
     -ostype $EPS_OS_DISTRO
     -rootfs $EPS_CT_STORAGE_CONTAINER:${EPS_CT_DISK_SIZE:-4}
