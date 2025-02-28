@@ -33,15 +33,28 @@ EPS_OS_VERSION=${EPS_OS_VERSION:-$(os_version)}
 ##   Source: https://github.com/bigantal/things-connector/blob/main/orangepi/README.md
 ################################################################
 
+# Function to check internet connectivity
+check_internet() {
+    ping -c 1 8.8.8.8 &> /dev/null
+    return $?
+}
+
+# Loop until internet is reachable
+while ! check_internet; do
+    echo "Waiting for internet connection..."
+    sleep 5
+done
+
 step_start "Operating System" "Updating" "Updated"
   pkg_update
   pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
-  pkg_add apt-utils ca-certificates curl
+  pkg_add apt-utils ca-certificates curl gnupg2 software-properties-common
 
 step_start "Plex Repository" "Adding" "Added"
   curl https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plex-archive-keyring.gpg >/dev/null
+  # curl https://downloads.plex.tv/plex-keys/PlexSign.key | sudo apt-key add -
   echo deb [signed-by=/usr/share/keyrings/plex-archive-keyring.gpg] https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
   #echo deb https://downloads.plex.tv/repo/deb/ public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
 
