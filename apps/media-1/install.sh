@@ -39,11 +39,11 @@ check_internet() {
     return $?
 }
 
-# Loop until internet is reachable
-while ! check_internet; do
-    echo "Waiting for internet connection..."
-    sleep 5
-done
+step_start "Internet connection" "Waiting for" "Established"
+  while ! check_internet; do
+      #echo "Waiting for internet connection..."
+      sleep 5
+  done
 
 step_start "Operating System" "Updating" "Updated"
   pkg_update
