@@ -38,7 +38,7 @@ step_start "Operating System" "Updating" "Updated"
   pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
-  pkg_add curl haveged gpg apt-transport-https
+  pkg_add curl haveged gpg apt-transport-https apt-utils ca-certificates
 
 step_start "Plex Repository" "Adding" "Added"
   curl https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plex-archive-keyring.gpg >/dev/null
