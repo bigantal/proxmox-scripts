@@ -170,6 +170,7 @@ step_start "LXC container" "Creating" "Created"
   # pct create 120 "local:vztmpl/debian-bullseye-lxd-image.tar.xz" -arch arm64 -cmode shell -hostname test120 -cores 8 -memory 1024 -onboot 1 -ostype debian -rootfs local:4 -swap 512
   # pct create 121 "local:vztmpl/debian-bullseye-lxd-image.tar.xz" -net0 name=eth0,bridge=vmbr0 -arch arm64 -cmode shell -hostname test121 -cores 8 -memory 1024 -onboot 1 -ostype debian -rootfs local:4 -swap 512
   
+  # workaround for https://github.com/pimox/pimox7/issues/160
   _ipConfig=",ip=dhcp"
   if [ "$EPS_OS_DISTRO" = "debian" ]; then
     _ipConfig=""
