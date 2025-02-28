@@ -37,6 +37,19 @@ step_start "Operating System" "Updating" "Updated"
   pkg_update
   pkg_upgrade
 
+step_start "Dependencies" "Installing" "Installed"
+  pkg_add curl haveged gpg apt-transport-https
+
+step_start "Plex Repository" "Adding" "Added"
+  curl https://downloads.plex.tv/plex-keys/PlexSign.key | gpg --dearmor | sudo tee /usr/share/keyrings/plex-archive-keyring.gpg >/dev/null
+  echo deb [signed-by=/usr/share/keyrings/plex-archive-keyring.gpg] https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
+
+step_start "Plex" "Installing" "Installed"
+  pkg_update
+  pkg_add plexmediaserver
+  svc_add plexmediaserver
+  svc_start plexmediaserver
+
 step_start "Transmission" "Installing" "Installed"
   pkg_update
   pkg_add transmission-daemon
