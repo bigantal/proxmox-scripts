@@ -80,4 +80,5 @@ step_start "Environment" "Cleaning" "Cleaned"
 
 step_end "Installation complete"
 
-printf "\nThe application should be reachable at ${CLR_CYB}https://$(os_ip):8443${CLR}\n\n"
+printf "\nThe Plex application should be reachable at ${CLR_CYB}https://$(os_ip):32400/web${CLR}\n\n"
+printf "\nThe Transmission application should be reachable at ${CLR_CYB}https://$(os_ip):9091/transmission/web${CLR}\n\n"
