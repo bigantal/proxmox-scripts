@@ -35,7 +35,7 @@ EPS_OS_VERSION=${EPS_OS_VERSION:-$(os_version)}
 
 step_start "Operating System" "Updating" "Updated"
   pkg_update
-#  pkg_upgrade
+  pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
   pkg_add curl wget haveged gpg openjdk-17-jre-headless
@@ -58,8 +58,8 @@ step_start "Environment" "Cleaning" "Cleaned"
 
 step_end "Installation complete"
 
-printf "\nThe application should be reachable at ${CLR_CYB}https://$(os_ip):8080${CLR}\n\n"
+printf "\nThe application should be reachable at ${CLR_CYB}http://$(os_ip):8080${CLR}\n\n"
 
-printf "\nTo unlock Jenkins, use the following command:\n\n"
-printf "${CLR_BLB}sudo cat /var/lib/jenkins/secrets/initialAdminPassword${CLR}\n\n"
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+printf "\nTo unlock Jenkins, use as initialAdminPassword:\n\n"
+
+cat /var/lib/jenkins/secrets/initialAdminPassword
