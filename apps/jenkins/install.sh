@@ -38,7 +38,7 @@ step_start "Operating System" "Updating" "Updated"
   pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
-  pkg_add curl wget haveged gpg openjdk-17-jre-headless
+  pkg_add curl wget haveged gpg openjdk-17-jre-headless git
 
 step_start "Jenkins Repository" "Adding" "Added"
   sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
