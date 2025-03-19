@@ -37,8 +37,8 @@ step_start "Operating System" "Updating" "Updated"
   pkg_update
 #  pkg_upgrade
 
-#step_start "Dependencies" "Installing" "Installed"
-#  pkg_add curl haveged gpg openjdk-17-jre-headless
+step_start "Dependencies" "Installing" "Installed"
+  pkg_add curl haveged gpg openjdk-17-jre-headless
 
 
 step_start "Jenkins Repository" "Adding" "Added"
