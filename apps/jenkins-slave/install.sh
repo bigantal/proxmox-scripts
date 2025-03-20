@@ -68,6 +68,7 @@ step_start "Docker" "Installing" "Installed"
   pkg_add docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   svc_add docker
   svc_start docker
+  sudo chmod 666 /var/run/docker.sock
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
