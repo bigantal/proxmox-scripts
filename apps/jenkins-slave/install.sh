@@ -37,19 +37,6 @@ step_start "Operating System" "Updating" "Updated"
   pkg_update
   pkg_upgrade
 
-step_start "Dependencies" "Installing" "Installed"
-  pkg_add curl wget haveged gpg openjdk-17-jre-headless git
-
-# step_start "Jenkins Repository" "Adding" "Added"
-#   sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-#   echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-
-# step_start "Jenkins" "Installing" "Installed"
-#   pkg_update
-#   pkg_add jenkins
-#   svc_add jenkins
-#   svc_start jenkins
-
 step_start "Jenkins User" "Creating" "Created"
   # Define the username and password
   USERNAME="jenkins"
@@ -58,8 +45,13 @@ step_start "Jenkins User" "Creating" "Created"
   sudo useradd -m -s /bin/bash "$USERNAME"
   # Set the password for the user
   echo "$USERNAME:$PASSWORD" | sudo chpasswd
+  # Add the user to the sudoers file
+  echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/"$USERNAME"
   # Verify the user creation
   id "$USERNAME"
+
+step_start "Dependencies" "Installing" "Installed"
+  pkg_add curl wget haveged gpg openjdk-17-jre-headless git openssh-server
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
