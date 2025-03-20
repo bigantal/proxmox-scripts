@@ -52,6 +52,9 @@ step_start "Jenkins User" "Creating" "Created"
   echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/"$USERNAME"
   # Verify the user creation
   id "$USERNAME"
+  # Add the user to the Docker group
+  sudo groupadd docker
+  sudo usermod -aG docker $USERNAME
 
 step_start "Docker Repository" "Adding" "Added"
   sudo install -m 0755 -d /etc/apt/keyrings
@@ -68,7 +71,6 @@ step_start "Docker" "Installing" "Installed"
   pkg_add docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   svc_add docker
   svc_start docker
-  sudo chmod 666 /var/run/docker.sock
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
