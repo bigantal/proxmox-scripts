@@ -67,10 +67,9 @@ step_start "Environment" "Cleaning" "Cleaned"
   fi
   pkg_clean
 
-# step_end "Installation complete"
+step_end "Installation complete"
 
-# printf "\nThe application should be reachable at ${CLR_CYB}http://$(os_ip):8080${CLR}\n\n"
-
-# printf "\nTo unlock Jenkins, use as initialAdminPassword:\n\n"
-
-# cat /var/lib/jenkins/secrets/initialAdminPassword
+printf "\nThe IP is ${CLR_CYB}$(os_ip)${CLR}\n\n"
+printf "The username is ${CLR_CYB}jenkins${CLR}\n"
+printf "The password is ${CLR_CYB}jenkins${CLR}\n\n"
+printf "The home folder is ${CLR_CYB}/home/jenkins${CLR}\n\n"
