@@ -55,7 +55,8 @@ step_start "Dependencies" "Installing" "Installed"
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
-    pkg_del "$EPS_DEPENDENCIES"
+    #pkg_del "$EPS_DEPENDENCIES"
+    printf "\nNo cleanup for ${EPS_DEPENDENCIES}\n"
   fi
   pkg_clean
 
