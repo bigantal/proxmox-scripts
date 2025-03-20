@@ -38,7 +38,7 @@ step_start "Operating System" "Updating" "Updated"
   pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
-  pkg_add curl wget haveged gpg openjdk-17-jre-headless git openssh-server
+  pkg_add curl wget haveged gpg openjdk-17-jre-headless git openssh-server ca-certificates
 
 step_start "Jenkins User" "Creating" "Created"
   # Define the username and password
@@ -52,6 +52,22 @@ step_start "Jenkins User" "Creating" "Created"
   echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/"$USERNAME"
   # Verify the user creation
   id "$USERNAME"
+
+step_start "Docker Repository" "Adding" "Added"
+  sudo install -m 0755 -d /etc/apt/keyrings
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  # Add the repository to Apt sources:
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+step_start "Docker" "Installing" "Installed"
+  pkg_update
+  pkg_add docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  svc_add docker
+  svc_start docker
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
