@@ -50,6 +50,17 @@ step_start "Dependencies" "Installing" "Installed"
 #   svc_add jenkins
 #   svc_start jenkins
 
+step_start "Jenkins User" "Creating" "Created"
+  # Define the username and password
+  USERNAME="jenkins"
+  PASSWORD="jenkins"
+  # Create the user
+  sudo useradd -m -s /bin/bash "$USERNAME"
+  # Set the password for the user
+  echo "$USERNAME:$PASSWORD" | sudo chpasswd
+  # Verify the user creation
+  id "$USERNAME"
+
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
     pkg_del "$EPS_DEPENDENCIES"
