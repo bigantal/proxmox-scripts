@@ -37,6 +37,9 @@ step_start "Operating System" "Updating" "Updated"
   pkg_update
   pkg_upgrade
 
+step_start "Dependencies" "Installing" "Installed"
+  pkg_add curl wget haveged gpg openjdk-17-jre-headless git openssh-server
+
 step_start "Jenkins User" "Creating" "Created"
   # Define the username and password
   USERNAME="jenkins"
@@ -49,9 +52,6 @@ step_start "Jenkins User" "Creating" "Created"
   echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/"$USERNAME"
   # Verify the user creation
   id "$USERNAME"
-
-step_start "Dependencies" "Installing" "Installed"
-  pkg_add git openssh-server curl wget haveged gpg openjdk-17-jre-headless
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
