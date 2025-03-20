@@ -51,7 +51,7 @@ step_start "Jenkins User" "Creating" "Created"
   id "$USERNAME"
 
 step_start "Dependencies" "Installing" "Installed"
-  pkg_add curl wget haveged gpg openjdk-17-jre-headless git openssh-server
+  pkg_add git openssh-server curl wget haveged gpg openjdk-17-jre-headless
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
