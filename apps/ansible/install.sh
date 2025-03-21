@@ -38,7 +38,7 @@ step_start "Operating System" "Updating" "Updated"
   pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
-  pkg_add curl wget haveged gpg nano ansible
+  pkg_add curl wget haveged gpg nano git openssh-server
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
