@@ -39,6 +39,12 @@ step_start "Operating System" "Updating" "Updated"
 
 step_start "Dependencies" "Installing" "Installed"
   pkg_add curl wget haveged gpg nano git openssh-server
+  # Backup the original sshd_config file
+  sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+  # Enable root login
+  sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+  # Restart SSH service to apply changes
+  sudo systemctl restart ssh
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
