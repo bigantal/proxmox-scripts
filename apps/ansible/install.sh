@@ -35,10 +35,12 @@ EPS_OS_VERSION=${EPS_OS_VERSION:-$(os_version)}
 
 step_start "Operating System" "Updating" "Updated"
   pkg_update
-  pkg_upgrade
+  #pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
-  pkg_add curl wget haveged gpg nano git openssh-server
+  pkg_add openssh-server
+
+step_start "SSH" "Configuring" "Configured"
   # Backup the original sshd_config file
   sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
   # Enable root login
@@ -48,8 +50,7 @@ step_start "Dependencies" "Installing" "Installed"
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
-    #pkg_del "$EPS_DEPENDENCIES"
-    printf "\nNo cleanup for ${EPS_DEPENDENCIES}\n"
+    pkg_del "$EPS_DEPENDENCIES"
   fi
   pkg_clean
 
