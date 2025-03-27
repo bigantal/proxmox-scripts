@@ -42,11 +42,18 @@ step_start "Dependencies" "Installing" "Installed"
 
 step_start "SSH" "Configuring" "Configured"
   # Backup the original sshd_config file
-  sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+  # sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
   # Enable root login
-  sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+  # sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
   # Restart SSH service to apply changes
-  sudo systemctl restart ssh
+  # sudo systemctl restart ssh
+
+  # Ensure the .ssh directory exists for the root user
+  mkdir -p /root/.ssh
+  chmod 700 /root/.ssh
+  # Add a public key to the authorized_keys file
+  echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDy9EytbmtV6RecCl4Rjpom+WG/zsjhzK3NgoluowHVY jenkins@example.com" >> /root/.ssh/authorized_keys
+  chmod 600 /root/.ssh/authorized_keys
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
