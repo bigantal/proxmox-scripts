@@ -41,7 +41,9 @@ step_start "Dependencies" "Installing" "Installed"
   pkg_add curl ca-certificates podman uidmap slirp4netns jq haveged
 
 step_start "UniFi OS Server" "Installing" "Installed"
-  curl -L https://get.ui.com/unifi-os-server | bash
+  curl -L -o /tmp/unifi-os-server https://fw-download.ubnt.com/data/unifi-os-server/df5b-linux-arm64-5.0.6-f35e944c-f4b6-4190-93a8-be61b96c58f4.6-arm64
+  chmod +x /tmp/unifi-os-server
+  /tmp/unifi-os-server
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
