@@ -35,7 +35,7 @@ EPS_OS_VERSION=${EPS_OS_VERSION:-$(os_version)}
 
 step_start "Operating System" "Updating" "Updated"
   pkg_update
-  #pkg_upgrade
+  pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
   pkg_add openssh-server
