@@ -38,20 +38,10 @@ step_start "Operating System" "Updating" "Updated"
   pkg_upgrade
 
 step_start "Dependencies" "Installing" "Installed"
-  pkg_add curl haveged gpg openjdk-17-jre-headless
+  pkg_add curl ca-certificates podman uidmap slirp4netns jq haveged
 
-step_start "MongoDB Repository" "Adding" "Added"
-  curl https://pgp.mongodb.com/server-7.0.asc | sudo gpg --dearmor | sudo tee /usr/share/keyrings/mongodb-org-server-7.0-archive-keyring.gpg >/dev/null
-  echo 'deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-org-server-7.0-archive-keyring.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse' | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list > /dev/null
-
-
-step_start "Podman" "Installing" "Installed"
-  pkg_update
-  pkg_add podman uidmap slirp4netns
-
-step_start "UniFi Network Controller" "Installing" "Installed"
-  pkg_update
-  pkg_add unifi
+step_start "UniFi OS Server" "Installing" "Installed"
+  curl -L https://get.ui.com/unifi-os-server | bash
 
 step_start "Environment" "Cleaning" "Cleaned"
   if [ "$EPS_CLEANUP" = true ]; then
@@ -61,4 +51,4 @@ step_start "Environment" "Cleaning" "Cleaned"
 
 step_end "Installation complete"
 
-printf "\nThe application should be reachable at ${CLR_CYB}https://$(os_ip):8443${CLR}\n\n"
+printf "\nUniFi OS Server should be reachable at ${CLR_CYB}https://$(os_ip):11443${CLR}\n\n"
